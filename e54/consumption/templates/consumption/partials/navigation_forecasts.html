@@ -1,0 +1,14 @@
+{% with view_name=request.resolver_match.view_name %}
+<ul class="nav nav-pills nav-fill py-3">
+    <li class="nav-item">
+        <a class="nav-link{% if "consumption:forecasts:list" in view_name or "consumption:forecasts:detail" in view_name %} active{% endif %}" href="{% url "consumption:forecasts:list" %}">
+            <i class="fas fa-th-list"></i> List
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link{% if view_name == "consumption:forecasts:create" %} active{% endif %}" href="{% url "consumption:forecasts:create" %}">
+            <i class="fas fa-play"></i> Forecast
+        </a>
+    </li>
+</ul>
+{% endwith %}

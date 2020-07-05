@@ -1,0 +1,14 @@
+{% with namespace=request.resolver_match.namespace %}
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link{% if namespace == "consumption:historical-data" %} active{% endif %}" href="{% url "consumption:historical-data:list" %}">
+            <i class="fas fa-history"></i> Historical Data
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link{% if namespace == "consumption:forecasts" %} active{% endif %}" href="{% url "consumption:forecasts:list" %}">
+            <i class="fas fa-brain"></i> Forecasts
+        </a>
+    </li>
+</ul>
+{% endwith %}

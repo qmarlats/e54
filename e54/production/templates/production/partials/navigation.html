@@ -1,0 +1,9 @@
+{% with namespace=request.resolver_match.namespace %}
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link{% if namespace == "production:historical-data" %} active{% endif %}" href="{% url "production:historical-data:list" %}">
+            <i class="fas fa-history"></i> Historical Data
+        </a>
+    </li>
+</ul>
+{% endwith %}

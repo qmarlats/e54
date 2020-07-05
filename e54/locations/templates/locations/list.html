@@ -1,0 +1,41 @@
+{% extends './layouts/base.html' %}
+
+{% block content %}
+{{ block.super }}
+
+<a class="btn btn-primary btn-block" href="{% url "locations:create" %}">
+    <i class="fas fa-plus"></i> Create a Location
+</a>
+
+<br>
+
+<table class="table table-striped">
+    <tbody>
+        {% for location in locations %}
+        <tr>
+            <td class="align-middle">
+                <strong>{{ location.name }}</strong><br>
+            </td>
+            <td class="align-middle">
+                <strong>{{ location.latitude|default_if_none:"<em>(no defined)</em>" }}</strong><br>
+                <small>Latitude</small>
+            </td>
+            <td class="align-middle">
+                <strong>{{ location.longitude|default_if_none:"<em>(no defined)</em>" }}</strong><br>
+                <small>Longitude</small>
+            </td>
+            <td class="align-middle">
+                <a class="btn btn-primary float-right" href="{% url "locations:update" location.pk %}">
+                    <i class="fas fa-pen"></i> Edit
+                </a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">There is no Location yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

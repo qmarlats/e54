@@ -1,0 +1,19 @@
+{% if form.errors %}
+<div class="alert alert-danger">
+    <h4 class="alert-heading"><i class="fas fa-exclamation-triangle"></i> Oh, no!</h4>
+    <p>The form contains some errors. Please fix errors described below.</p>
+    {% for field in form %}
+    {% if field.errors %}
+    <strong>{{ field.name|title }} :</strong>
+    <ul>
+        {% for error in field.errors %}
+        <li>{{ error|escape }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endfor %}
+    {% if form.non_field_errors %}
+        {{ form.non_field_errors }}
+    {% endif %}
+</div>
+{% endif %}

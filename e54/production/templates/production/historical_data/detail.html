@@ -1,0 +1,39 @@
+{% extends '../layouts/base.html' %}
+
+{% block content %}
+{{ block.super }}
+
+<div class="card mb-3">
+    <div class="card-header">Production Graph</div>
+    <div class="card-body">
+        {{ production_plot|safe }}
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-header">Production Data</div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Time</th>
+                    <th scope="col">Total (MW)</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <th class="align-middle" scope="row">{{ record.datetime|time:"H:i" }}</th>
+                    <td class="align-middle">{{ record.total|floatformat:"0" }}</td>
+                    <td class="align-middle">
+                        <a class="btn btn-sm btn-primary float-right" href="{% url "production:historical-data:update" record.pk %}"><i class="fas fa-edit"></i> Edit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

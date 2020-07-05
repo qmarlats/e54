@@ -1,0 +1,58 @@
+{% extends '../layouts/base.html' %}
+
+{% load as_percentage %}
+
+{% block content %}
+{{ block.super }}
+
+<div class="card mb-3">
+    <div class="card-header">Temperature Graph</div>
+    <div class="card-body">
+        {{ temperature_plot|safe }}
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-header">Weather Data</div>
+    <div class="card-body">
+        <p>Precipitation probability is given in brackets, next to precipitation intensity. Wind direction is given in brackets, next to wind speed.</p>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Time</th>
+                        <th scope="col">Loc.</th>
+                        <th scope="col">Temp. (°C)</th>
+                        <th scope="col">Precip. (mm/h)</th>
+                        <th scope="col">Wind (m/s)</th>
+                        <th scope="col">Humidity</th>
+                        <th scope="col">Pressure (hPa)</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in records %}
+                    <tr>
+                        <th class="align-middle" scope="row">{{ record.datetime|time:"H:i" }}</th>
+                        <td class="align-middle">{{ record.location.name }}</td>
+                        <td class="align-middle">{{ record.temperature|floatformat:"2" }}</td>
+                        <td class="align-middle">
+                            {{ record.precipitation_intensity|floatformat:"2" }} ({{ record.precipitation_probability|as_percentage|floatformat:"0" }} %)
+                        </td>
+                        <td class="align-middle">
+                            {{ record.wind_speed|floatformat:"2" }} ({{ record.wind_bearing }}°)
+                        </td>
+                        <td class="align-middle">{{ record.humidity|as_percentage|floatformat:"0" }} %</td>
+                        <td class="align-middle">{{ record.pressure|floatformat:"2" }}</td>
+                        <td class="align-middle">
+                            <a class="btn btn-sm btn-primary float-right" href="{% url "weather:historical-data:update" record.pk %}"><i class="fas fa-edit"></i> Edit</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

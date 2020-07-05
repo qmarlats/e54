@@ -1,0 +1,68 @@
+{% extends '../layouts/base.html' %}
+
+{% load show_bulk_delete_modal %}
+
+{% block content %}
+{{ block.super }}
+
+<table class="table table-striped">
+    <tbody>
+        {% for record in forecasts %}
+        <tr>
+            <td class="align-middle">
+                {% if record.day %}
+                <strong>{{ record.day|date }}</strong><br>
+                {% elif record.month %}
+                <strong>{{ record.month|date:"F" }}</strong><br>
+                {% else %}
+                <strong>{{ record.year|date:"Y" }}</strong><br>
+                {% endif %}
+                <small>{{ record.records_count }} records</small>
+            </td>
+            <td class="align-middle">
+                <strong>{{ record.average_consumption|floatformat:"0" }} MW</strong><br>
+                <small>Average consumption</small>
+            </td>
+            <td class="align-middle">
+                {% if record.day %}
+                <div class="btn-group float-right" role="group">
+                    <a class="btn btn-primary float-right" href="{% url "consumption:forecasts:detail" record.day|date:"Y" record.day|date:"m" record.day|date:"d" %}">
+                        <i class="fas fa-eye"></i> View
+                    </a>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#remove-record-{{ record.day|date:"Y" }}-{{ record.day|date:"m" }}-{{ record.day|date:"d" }}">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </div>
+                {% show_bulk_delete_modal record.records_count "consumption:forecasts:delete-day" day=record.day %}
+                {% elif record.month %}
+                <div class="btn-group float-right" role="group">
+                    <a class="btn btn-primary float-right" href="{% url "consumption:forecasts:list-month" record.month|date:"Y" record.month|date:"m" %}">
+                        <i class="fas fa-eye"></i> View
+                    </a>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#remove-record-{{ record.month|date:"Y" }}-{{ record.month|date:"m" }}">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </div>
+                {% show_bulk_delete_modal record.records_count "consumption:forecasts:delete-month" month=record.month %}
+                {% else %}
+                <div class="btn-group float-right" role="group">
+                    <a class="btn btn-primary float-right" href="{% url "consumption:forecasts:list-year" record.year|date:"Y" %}">
+                        <i class="fas fa-eye"></i> View
+                    </a>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#remove-record-{{ record.year|date:"Y" }}">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </div>
+                {% show_bulk_delete_modal record.records_count "consumption:forecasts:delete-year" year=record.year %}
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">There is no Forecast yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% with view_name=request.resolver_match.view_name url_parameters=request.resolver_match.kwargs %}
+{% if "consumption:historical-data:list" in view_name or "consumption:historical-data:detail" in view_name %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item{% if view_name == "consumption:historical-data:list" %} active{% endif %}">
+            {% if view_name != "consumption:historical-data:list" %}<a href="{% url "consumption:historical-data:list" %}">{% endif %}
+                Consumption Historical Data
+            {% if view_name != "consumption:historical-data:list" %}</a>{% endif %}
+        </li>
+        {% if url_parameters.year %}
+        <li class="breadcrumb-item{% if view_name == "consumption:historical-data:list-year" %} active{% endif %}">
+            {% if view_name != "consumption:historical-data:list-year" %}<a href="{% url "consumption:historical-data:list-year" url_parameters.year %}">{% endif %}
+                {{ url_parameters.year }}
+            {% if view_name != "consumption:historical-data:list-monthly" %}</a>{% endif %}
+        </li>
+        {% endif %}
+        {% if url_parameters.month %}
+        <li class="breadcrumb-item{% if view_name == "consumption:historical-data:list-month" %} active{% endif %}">
+            {% if view_name != "consumption:historical-data:list-month" %}<a href="{% url "consumption:historical-data:list-month" url_parameters.year url_parameters.month|stringformat:"02d" %}">{% endif %}
+                {{ url_parameters.month|stringformat:"02d" }}
+            {% if view_name != "consumption:historical-data:list-month" %}</a>{% endif %}
+        </li>
+        {% endif %}
+        {% if url_parameters.day %}
+        <li class="breadcrumb-item{% if view_name == "consumption:historical-data:detail" %} active{% endif %}">
+            {% if view_name != "consumption:historical-data:detail" %}<a href="{% url "consumption:historical-data:detail" url_parameters.year url_parameters.month|stringformat:"02d" url_parameters.day|stringformat:"02d" %}">{% endif %}
+                {{ request.resolver_match.kwargs.day|stringformat:"02d" }}
+            {% if view_name != "consumption:historical-data:detail" %}</a>{% endif %}
+        </li>
+        {% endif %}
+    </ol>
+</nav>
+{% endif %}
+{% endwith %}

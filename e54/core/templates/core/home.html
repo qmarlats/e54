@@ -1,0 +1,9 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<a class="btn btn-primary btn-lg btn-block" href="{% url "consumption:forecasts:create" %}">
+    <i class="fas fa-brain"></i> Forecast tomorrow's consumption
+</a>
+
+{% endblock %}

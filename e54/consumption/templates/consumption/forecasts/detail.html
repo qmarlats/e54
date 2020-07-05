@@ -1,0 +1,35 @@
+{% extends '../layouts/base.html' %}
+
+{% block content %}
+{{ block.super }}
+
+<div class="card mb-3">
+    <div class="card-header">Forecast Graph</div>
+    <div class="card-body">
+        {{ consumption_plot|safe }}
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-header">Forecast Data</div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Time</th>
+                    <th scope="col">Total (MW)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for forecast in forecasts %}
+                <tr>
+                    <th class="align-middle" scope="row">{{ forecast.datetime|time:"H:i" }}</th>
+                    <td class="align-middle">{{ forecast.total|floatformat:"0" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

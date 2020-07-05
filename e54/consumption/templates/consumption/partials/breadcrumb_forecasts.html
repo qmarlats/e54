@@ -1,0 +1,34 @@
+{% with view_name=request.resolver_match.view_name url_parameters=request.resolver_match.kwargs %}
+{% if "consumption:forecasts:list" in view_name or "consumption:forecasts:detail" in view_name %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item{% if view_name == "consumption:forecasts:list" %} active{% endif %}">
+            {% if view_name != "consumption:forecasts:list" %}<a href="{% url "consumption:forecasts:list" %}">{% endif %}
+                Consumption Forecasts
+            {% if view_name != "consumption:forecasts:list" %}</a>{% endif %}
+        </li>
+        {% if url_parameters.year %}
+        <li class="breadcrumb-item{% if view_name == "consumption:forecasts:list-year" %} active{% endif %}">
+            {% if view_name != "consumption:forecasts:list-year" %}<a href="{% url "consumption:forecasts:list-year" url_parameters.year %}">{% endif %}
+                {{ url_parameters.year }}
+            {% if view_name != "consumption:forecasts:list-year" %}</a>{% endif %}
+        </li>
+        {% endif %}
+        {% if url_parameters.month %}
+        <li class="breadcrumb-item{% if view_name == "consumption:forecasts:list-month" %} active{% endif %}">
+            {% if view_name != "consumption:forecasts:list-month" %}<a href="{% url "consumption:forecasts:list-month" url_parameters.year url_parameters.month|stringformat:"02d" %}">{% endif %}
+                {{ url_parameters.month|stringformat:"02d" }}
+            {% if view_name != "consumption:forecasts:list-month" %}</a>{% endif %}
+        </li>
+        {% endif %}
+        {% if url_parameters.day %}
+        <li class="breadcrumb-item{% if view_name == "consumption:forecasts:detail" %} active{% endif %}">
+            {% if view_name != "consumption:forecasts:detail" %}<a href="{% url "consumption:forecasts:detail" url_parameters.year url_parameters.month|stringformat:"02d" url_parameters.day|stringformat:"02d" %}">{% endif %}
+                {{ request.resolver_match.kwargs.day|stringformat:"02d" }}
+            {% if view_name != "consumption:forecasts:detail" %}</a>{% endif %}
+        </li>
+        {% endif %}
+    </ol>
+</nav>
+{% endif %}
+{% endwith %}

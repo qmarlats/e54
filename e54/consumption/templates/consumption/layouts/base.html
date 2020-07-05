@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-4"><i class="fas fa-plug"></i> Consumption</h1>
+        <p class="lead">Here you'll find electrical consumption historical data and the forecast for tomorrow. You can also create, import and modify data.</p>
+    </div>
+</div>
+
+{% include '../partials/navigation.html' %}
+
+{% if request.resolver_match.namespace == "consumption:historical-data" %}
+{% include '../partials/navigation_historical_data.html' %}
+{% include '../partials/breadcrumb_historical_data.html' %}
+{% elif request.resolver_match.namespace == "consumption:forecasts" %}
+{% include '../partials/navigation_forecasts.html' %}
+{% include '../partials/breadcrumb_forecasts.html' %}
+{% endif %}
+
+{% endblock %}

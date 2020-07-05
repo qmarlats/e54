@@ -1,0 +1,13 @@
+{% extends '../layouts/base.html' %}
+
+{% load crispy_forms_tags %}
+{% load show_form_errors %}
+
+{% block content %}
+{{ block.super }}
+
+{% show_form_errors form %}
+
+{% crispy form form.helper %}
+
+{% endblock %}

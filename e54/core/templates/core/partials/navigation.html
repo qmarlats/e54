@@ -1,0 +1,33 @@
+{% with path=request.resolver_match.namespace %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{% url "core:home" %}">e54</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item{% if "weather" in path %} active{% endif %}">
+                <a class="nav-link" href="{% url "weather:historical-data:list" %}">
+                    <i class="fas fa-cloud-sun"></i> Weather
+                </a>
+            </li>
+            <li class="nav-item{% if "production" in path %} active{% endif %}">
+                <a class="nav-link" href="{% url "production:historical-data:list" %}">
+                    <i class="fas fa-car-battery"></i> Production
+                </a>
+            </li>
+            <li class="nav-item{% if "consumption" in path %} active{% endif %}">
+                <a class="nav-link" href="{% url "consumption:historical-data:list" %}">
+                    <i class="fas fa-plug"></i> Consumption
+                </a>
+            </li>
+            <li class="nav-item{% if path == "locations" %} active{% endif %}">
+                <a class="nav-link" href="{% url "locations:list" %}">
+                    <i class="fas fa-map-marker-alt"></i> Locations
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+{% endwith %}
