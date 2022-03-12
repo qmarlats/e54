@@ -18,7 +18,7 @@ numpy==1.17.4
 oauthlib==3.1.0
 pandas==0.25.3
 pathspec==0.6.0
-Pillow==6.2.1
+Pillow==9.0.1
 plotly==4.4.1
 pycodestyle==2.5.0
 pyflakes==2.1.1
