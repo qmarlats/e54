@@ -14,7 +14,7 @@ django-crispy-forms==1.8.1
 idna==2.8
 isort==4.3.21
 multidict==4.7.2
-numpy==1.17.4
+numpy==1.22.0
 oauthlib==3.1.0
 pandas==0.25.3
 pathspec==0.6.0
